@@ -31,7 +31,7 @@ namespace ReswCodeGen.Package.IntegrationTests
 
 				//Validate package load
 				IVsPackage package;
-				var packageGuid = new Guid(GuidList.VSPackageString);
+				var packageGuid = new Guid(Constants.PackageId);
 				Assert.IsTrue(0 == shellService.LoadPackage(ref packageGuid, out package));
 				Assert.IsNotNull(package, "Package failed to load");
 			});

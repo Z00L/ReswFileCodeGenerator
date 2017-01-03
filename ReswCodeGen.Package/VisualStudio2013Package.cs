@@ -21,19 +21,19 @@ namespace ReswCodeGen
 	[PackageRegistration(UseManagedResourcesOnly = true)]
 	// This attribute is used to register the information needed to show this package
 	// in the Help/About dialog of Visual Studio.
-	[InstalledProductRegistration("#1", "#2", "1.5", IconResourceID = 3)]
-	[Guid(GuidList.VSPackageString)]
+	[InstalledProductRegistration("#1", "#2", Constants.PackageVersion, IconResourceID = 3)]
+	[Guid(Constants.PackageId)]
 	[DefaultRegistryRoot("Software\\Microsoft\\VisualStudio\\12.0")]
 	[ProvideObject(typeof(ReswFileCSharpCodeGenerator))]
 	[ProvideObject(typeof(ReswFileVisualBasicCodeGenerator))]
 	[ProvideObject(typeof(ReswFileCSharpCodeGeneratorInternal))]
 	[ProvideObject(typeof(ReswFileVisualBasicCodeGeneratorInternal))]
-	[ProvideGenerator(typeof(ReswFileCSharpCodeGenerator), "ReswFileCodeGenerator", "RESW File Code Generator for C#", "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", true)] // csharp
-	[ProvideGenerator(typeof(ReswFileVisualBasicCodeGenerator), "ReswFileCodeGenerator", "RESW File Code Generator for VB", "{164B10B9-B200-11D0-8C61-00A0C91E29D5}", true)] // visual basic
-	//[ProvideGenerator(typeof(ReswFileCSharpCodeGenerator), "PublicReswFileCodeGenerator", "RESW File Code Generator for C#", "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", true)] // csharp
-	//[ProvideGenerator(typeof(ReswFileVisualBasicCodeGenerator), "PublicReswFileCodeGenerator", "RESW File Code Generator for VB", "{164B10B9-B200-11D0-8C61-00A0C91E29D5}", true)] // visual basic
-	[ProvideGenerator(typeof(ReswFileCSharpCodeGeneratorInternal), "InternalReswFileCodeGenerator", "RESW File Code Generator for C#", "{FAE04EC1-301F-11D3-BF4B-00C04F79EFBC}", true)] // csharp
-	[ProvideGenerator(typeof(ReswFileVisualBasicCodeGeneratorInternal), "InternalReswFileCodeGenerator", "RESW File Code Generator for VB", "{164B10B9-B200-11D0-8C61-00A0C91E29D5}", true)] // visual basic
+	[ProvideGenerator(typeof(ReswFileCSharpCodeGenerator), "ReswFileCodeGenerator", "RESW File Code Generator for C#", Constants.CSharpProviderGeneratorId, true)] // C#
+	[ProvideGenerator(typeof(ReswFileVisualBasicCodeGenerator), "ReswFileCodeGenerator", "RESW File Code Generator for VB", Constants.VisualBasicProviderGeneratorId, true)] // VB
+	//[ProvideGenerator(typeof(ReswFileCSharpCodeGenerator), "PublicReswFileCodeGenerator", "RESW File Code Generator for C#", Constants.CSharpProviderGeneratorId, true)] // C#
+	//[ProvideGenerator(typeof(ReswFileVisualBasicCodeGenerator), "PublicReswFileCodeGenerator", "RESW File Code Generator for VB", Constants.VisualBasicProviderGeneratorId, true)] // VB
+	[ProvideGenerator(typeof(ReswFileCSharpCodeGeneratorInternal), "InternalReswFileCodeGenerator", "RESW File Code Generator for C#", Constants.CSharpProviderGeneratorId, true)] // C#
+	[ProvideGenerator(typeof(ReswFileVisualBasicCodeGeneratorInternal), "InternalReswFileCodeGenerator", "RESW File Code Generator for VB", Constants.VisualBasicProviderGeneratorId, true)] // VB
 	public sealed class VisualStudio2013Package : Package
 	{
 		/// <summary>

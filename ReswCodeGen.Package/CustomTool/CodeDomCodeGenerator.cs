@@ -745,10 +745,16 @@ namespace ReswCodeGen.CustomTool
 			};
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="additionalAttributes"></param>
+		/// <returns></returns>
 		private IEnumerable<CodeTypeMember> GenerateResourceContextProperty(MemberAttributes? additionalAttributes = MemberAttributes.Static)
 		{
 			var type = new CodeTypeReference("ResourceContext");
 			var field = new CodeFieldReferenceExpression(null, "_context");
+			var valueField = new CodeFieldReferenceExpression(null, "value");
 
 			// Note: "readonly" is not supported by CodeDom
 			var fieldAttributes = MemberAttributes.Private;
@@ -767,19 +773,44 @@ namespace ReswCodeGen.CustomTool
 				Type = type
 			};
 
-			// public ResourceContext Context { get { return _context; } }
+			// public ResourceContext Context { get { return _context; } set { _context = value; } }
 			yield return new CodeMemberProperty
 			{
 				Attributes = propertyAttributes,
-				//Comments =
-				//{
-				//	new CodeCommentStatement("<summary>", true),
-				//	new CodeCommentStatement("Holds a cached instance of the referenced ResourceContext.", true),
-				//	new CodeCommentStatement("</summary>", true)
-				//},
+				Comments =
+				{
+					new CodeCommentStatement("<remarks>", true),
+					new CodeCommentStatement("This property is prefilled with the default ResourceContext instance, which is shared for all resources (and views).", true),
+					new CodeCommentStatement("When you want to modify the ResourceContext, you should consider to clone the existing ResourceContext before.", true),
+					new CodeCommentStatement("</remarks>", true)
+				},
 				GetStatements =
 				{
 					new CodeMethodReturnStatement { Expression = field }
+				},
+				SetStatements =
+				{
+					new CodeConditionStatement
+					{
+						Condition = new CodeBinaryOperatorExpression
+						{
+							Left = valueField,
+							Operator = CodeBinaryOperatorType.IdentityEquality,
+							Right = new CodePrimitiveExpression(null)
+						},
+						TrueStatements =
+						{
+							new CodeThrowExceptionStatement
+							{
+								ToThrow = new CodeObjectCreateExpression(new CodeTypeReference(typeof(ArgumentNullException)), new CodePrimitiveExpression(valueField.FieldName), new CodePrimitiveExpression("Provide a valid ResourceContext."))
+							}
+						}
+					},
+					new CodeAssignStatement
+					{
+						Left = new CodeFieldReferenceExpression(null, field.FieldName),
+						Right = valueField
+					}
 				},
 				Name = "Context",
 				Type = type
