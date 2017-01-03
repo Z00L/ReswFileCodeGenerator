@@ -6,6 +6,9 @@ Now the plugin supports the "."-notation of the resources names.
 
 TODO: deploy on visualstudiogallery and add example for INotifyPropertyChanged implementation to change languages during runtime for UWP-apps.
 
+#How to use
+Download or clone the source, compile project `ReswCodeGen.Package` and install the plugin by executing the Visual Studio Extension `ReswCodeGen.vsix` from your debug/release output folder.
+
 #Origin, author and copyright
 https://visualstudiogallery.msdn.microsoft.com/3ab88efd-1afb-4ff5-9faf-8825a282596a
 Christian Resma Helle
